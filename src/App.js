@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom'
+import React from 'react';
 import './App.css';
-import Map from "./components/Map";
+import WorldMap from './components/WorldMap';
 
 
 const App = () => {
   return (
     <div className="App">
-      <Map/>
+      <WorldMap/>
     </div>
   );
 }
