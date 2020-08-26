@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react"
 import { geoPath, geoAlbers } from "d3-geo"
 import { feature } from "topojson-client"
+import styles from "../styles/WorldMap.module.css"
+import * as d3 from "d3";
 
 const projection = geoAlbers()
   .scale(3000)
   .center([-25, 38])
 
-const num = projection.center();
-console.log(num);
+ var div = d3.select("body").append("div")
+  .attr("width", "50")
+  .attr("class", "infoBox")
+  .style("display", "none");
 
 const WorldMap = () => {
-  // state array will hold our county objects
-  const [geographies, setGeographies] = useState([])
+  // state array will hold our county GeoJSON objects
+  const [counties, setCounties] = useState([]);
 
   // fetch the json data from our public directory
   useEffect(() => {
@@ -22,55 +26,52 @@ const WorldMap = () => {
           return
         }
         // Populate the state array using topojson's feature fx
+        // wd is a topology, sub is an object
         response.json().then(worlddata => {
-          setGeographies(feature(worlddata, worlddata.objects.subunits).features);
+          setCounties(feature(worlddata, worlddata.objects.subunits).features);
         })
       })
   }, [])
-
+  
   // click handler
-  const handleCountryClick = countryIndex => {
-    console.log("Clicked on country: ", geographies[countryIndex])
+  const clickHandler = index => {
+    console.log("Clicked on county: ", counties[index].properties.fullName)
   }
 
-  // const handleMarkerClick = i => {
-  //   console.log("Marker: ", cities[i])
-  // }
+  // Mouse over handler
+  const hoverHandler = (e, index) => {
+    div
+      .style("display", "inline")
+      .text(counties[index].properties.fullName)
+      .style("left", `${e.screenX}`)
+      .style("top", `${e.screenY}`)
+  }
+
+  const mouseOutHandler = () => {
+    div.style("display", "none");
+  }
 
   return (
     <svg width={ 1000 } height={ 650 } viewBox="0 0 1000 650">
       <g className="counties">
         {/*Fills in counties with white*/}
         {/*Creates black outline*/}
-        {geographies.map((d,i) => (
+        {counties.map((section, index) => (
             <path
-              key={ `path-${ i }` }
-              d={ geoPath().projection(projection)(d) }
-              className="county"
+              key={ `path-${ index }` }
+              d={ geoPath().projection(projection)(section) }
+              className={styles.county}
               fill={ `rgba(255,255,255)` }
               stroke="#000000"
-              strokeWidth={ 1 }
-              onClick={ () => handleCountryClick(i) }
+              strokeWidth={ 0.5 }
+              onClick={ () => clickHandler(index) }
+              onMouseOver={ (e) => hoverHandler(e, index)}
+              onMouseOut={ () => mouseOutHandler() }
             />
           ))
         }
+        <text x="50" y="100" display="inline">Hello</text>
       </g>
-      {/* <g className="markers">
-        {
-          cities.map((city, i) => (
-            <circle
-              key={ `marker-${i}` }
-              cx={ projection(city.coordinates)[0] }
-              cy={ projection(city.coordinates)[1] }
-              r={ city.population / 3000000 }
-              fill="#E91E63"
-              stroke="#FFFFFF"
-              className="marker"
-              onClick={ () => handleMarkerClick(i) }
-            />
-          ))
-        }
-      </g> */}
     </svg>
   )
 }
