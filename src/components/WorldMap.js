@@ -3,6 +3,7 @@ import { geoPath, geoAlbers } from "d3-geo"
 import { feature } from "topojson-client"
 import styles from "../styles/WorldMap.module.css"
 import * as d3 from "d3";
+import axios from 'axios';
 
 const projection = geoAlbers()
   .scale(3000)
@@ -13,7 +14,7 @@ var div = d3.select("body").append("div")
   .attr("class", "infoBox")
   .style("display", "none");
 
-const WorldMap = (props) => {
+const WorldMap = () => {
   // state array will hold our county GeoJSON objects
   const [counties, setCounties] = useState([]);
   const [chosen, setChosen] = useState();
