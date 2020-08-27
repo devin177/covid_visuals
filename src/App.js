@@ -6,7 +6,7 @@ import WorldMap from './components/WorldMap';
 const App = () => {
   return (
     <div className="App">
-      <WorldMap/>
+      <WorldMap data="hello"/>
     </div>
   );
 }

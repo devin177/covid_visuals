@@ -8,14 +8,15 @@ const projection = geoAlbers()
   .scale(3000)
   .center([-25, 38])
 
- var div = d3.select("body").append("div")
+var div = d3.select("body").append("div")
   .attr("width", "50")
   .attr("class", "infoBox")
   .style("display", "none");
 
-const WorldMap = () => {
+const WorldMap = (props) => {
   // state array will hold our county GeoJSON objects
   const [counties, setCounties] = useState([]);
+  const [chosen, setChosen] = useState();
 
   // fetch the json data from our public directory
   useEffect(() => {
@@ -26,29 +27,34 @@ const WorldMap = () => {
           return
         }
         // Populate the state array using topojson's feature fx
-        // wd is a topology, sub is an object
         response.json().then(worlddata => {
           setCounties(feature(worlddata, worlddata.objects.subunits).features);
         })
       })
   }, [])
-  
+
   // click handler
-  const clickHandler = index => {
-    console.log("Clicked on county: ", counties[index].properties.fullName)
+  const clickHandler = async (e, index) => {
+    setChosen(counties[index].properties.name);
+    div.style("display", "none");
+
+    // Move the text box
+    d3.select(".textBox")
+      .style("display", "inline")
   }
 
-  // Mouse over handler
-  const hoverHandler = (e, index) => {
+  // Updates label based on mouse
+  const hoverHandler = (index) => {
     div
       .style("display", "inline")
-      .text(counties[index].properties.fullName)
-      .style("left", `${e.screenX}`)
-      .style("top", `${e.screenY}`)
+      .text(counties[index].properties.fullName);
   }
 
+  // Removes hover label when not on any county
   const mouseOutHandler = () => {
     div.style("display", "none");
+    d3.select(".textBox")
+      .style("display", "none");
   }
 
   return (
@@ -64,14 +70,17 @@ const WorldMap = () => {
               fill={ `rgba(255,255,255)` }
               stroke="#000000"
               strokeWidth={ 0.5 }
-              onClick={ () => clickHandler(index) }
-              onMouseOver={ (e) => hoverHandler(e, index)}
+              onClick={ (e) => clickHandler(e, index) }
+              onMouseOver={ () => hoverHandler(index)}
               onMouseOut={ () => mouseOutHandler() }
             />
           ))
         }
-        <text x="50" y="100" display="inline">Hello</text>
       </g>
+      <text className="instructions" x="0" y="20">
+        Click on a county for more information!
+      </text>
+      <text className="textBox" x="0" y="100">{chosen}</text>
     </svg>
   )
 }

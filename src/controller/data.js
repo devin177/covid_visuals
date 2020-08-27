@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function getData(req, res) {
+export default async function getData(req, res) {
   try {
     const result = await axios.get("https://api.covidtracking.com/v1/states/ca/current.json");
     console.log(result.data);
