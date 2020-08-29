@@ -5,6 +5,7 @@ import styles from "../styles/WorldMap.module.css"
 import * as d3 from "d3";
 import axios from 'axios';
 
+console.log(window.location.href);
 const projection = geoAlbers()
   .scale(3000)
   .center([-25, 38])
@@ -47,7 +48,7 @@ const WorldMap = () => {
     d3.select(".dataBox")
       .style("display", "inline");
     
-    axios.get(`${window.location.href}/data/?county=${counties[index].properties.name}`)
+    axios.get(`${window.location.href}data/?county=${counties[index].properties.name}`)
       .then(res => {
         setCovidInfo(res.data[0]);
         console.log(res.data[0]);
