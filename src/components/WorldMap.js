@@ -18,6 +18,7 @@ const WorldMap = () => {
   // state array will hold our county GeoJSON objects
   const [counties, setCounties] = useState([]);
   const [chosen, setChosen] = useState();
+  const [covidInfo, setCovidInfo] = useState();
 
   // fetch the json data from our public directory
   useEffect(() => {
@@ -42,6 +43,12 @@ const WorldMap = () => {
     // Move the text box
     d3.select(".textBox")
       .style("display", "inline")
+    
+    axios.get(`http://localhost:8080/?county=${counties[index].properties.name}`)
+      .then(res => {
+        setCovidInfo(res.data[0]);
+        console.log(res.data[0]);
+      })
   }
 
   // Updates label based on mouse
@@ -82,6 +89,7 @@ const WorldMap = () => {
         Click on a county for more information!
       </text>
       <text className="textBox" x="0" y="100">{chosen}</text>
+      <text className="dataBox" x="0" y="200">{JSON.stringify(covidInfo)}</text>
     </svg>
   )
 }

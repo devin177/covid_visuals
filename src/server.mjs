@@ -24,7 +24,6 @@ app.get('/', async (req, res) => {
         date: "2020-08-25"
       }
     )
-  console.log(result);
   res.json(result);
 });
 
