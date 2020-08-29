@@ -13,13 +13,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/hey', (req, res) => res.send('ho!'));
-
+// Ping the db to get covid data
 app.get('/api/data', getData);
 
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, 'build')));
 
+// serve the react app
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
@@ -36,6 +36,7 @@ app.get('/data', async (req, res) => {
   res.json(result);
 });
 
-app.listen(process.env.SERVER, () => {
-  console.log(`Listening on ${process.env.SERVER}`);
+const port = process.env.PORT
+app.listen(port, () => {
+  console.log(`Listening on ${port}`);
 })
