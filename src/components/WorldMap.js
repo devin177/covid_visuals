@@ -44,7 +44,7 @@ const WorldMap = () => {
     d3.select(".textBox")
       .style("display", "inline")
     
-    axios.get(`http://localhost:8080/?county=${counties[index].properties.name}`)
+    axios.get(`http://localhost:8080/data/?county=${counties[index].properties.name}`)
       .then(res => {
         setCovidInfo(res.data[0]);
         console.log(res.data[0]);

@@ -15,7 +15,7 @@ app.get('/hey', (req, res) => res.send('ho!'));
 
 app.get('/api/data', getData);
 
-app.get('/', async (req, res) => {
+app.get('/data', async (req, res) => {
   const result = await knex("Cases")
     .select("*")
     .where(
