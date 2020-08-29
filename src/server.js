@@ -35,6 +35,6 @@ app.get('/data', async (req, res) => {
   res.json(result);
 });
 
-app.listen(process.env.PORT, () => {
-  console.log("Listening on port 8080");
+app.listen(process.env.PORT || 8080, () => {
+  console.log("Listening");
 })
