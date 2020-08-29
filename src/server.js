@@ -1,4 +1,4 @@
-require('dotenv').config();
+const dotenv = require('dotenv');
 const express = require('express');
 const getData = require("./controller/data");
 const bodyParser =  require('body-parser');
@@ -35,6 +35,6 @@ app.get('/data', async (req, res) => {
   res.json(result);
 });
 
-app.listen(process.env.PORT || 8080, () => {
-  console.log("Listening");
+app.listen(process.env.SERVER, () => {
+  console.log(`Listening on ${process.env.SERVER}`);
 })

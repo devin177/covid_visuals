@@ -43,8 +43,11 @@ const WorldMap = () => {
     // Move the text box
     d3.select(".textBox")
       .style("display", "inline")
+
+    d3.select(".dataBox")
+      .style("display", "inline");
     
-    axios.get(`http://localhost:8080/data/?county=${counties[index].properties.name}`)
+    axios.get(`http://localhost:5000/data/?county=${counties[index].properties.name}`)
       .then(res => {
         setCovidInfo(res.data[0]);
         console.log(res.data[0]);
@@ -62,6 +65,8 @@ const WorldMap = () => {
   const mouseOutHandler = () => {
     div.style("display", "none");
     d3.select(".textBox")
+      .style("display", "none");
+    d3.select(".dataBox")
       .style("display", "none");
   }
 
