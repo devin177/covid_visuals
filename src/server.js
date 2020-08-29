@@ -1,8 +1,8 @@
-import express from 'express';
-import getData from './controller/data.js';
-import bodyParser from 'body-parser';
-import cors from "cors";
-import knex from './db/knex.js';
+const express = require('express');
+const getData = require("./controller/data");
+const bodyParser =  require('body-parser');
+const cors = require("cors");
+const knex = require('./db/knex.js');
 
 const app = express();
 

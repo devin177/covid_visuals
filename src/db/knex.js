@@ -1,5 +1,5 @@
-import Knex from 'knex';
-import knexConfig from '../../knexfile.js';
+const Knex = require('knex');
+const knexConfig = require ('../../knexfile.js');
 
 const knex = Knex(knexConfig['development']);
-export default knex;
+module.exports = knex;

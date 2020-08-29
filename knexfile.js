@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 
 const knexConfig = {
   development: {
@@ -25,4 +24,4 @@ const knexConfig = {
   },
 };
 
-export default knexConfig;
+module.exports = knexConfig;
