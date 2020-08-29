@@ -1,9 +1,9 @@
 const dotenv = require('dotenv');
 const express = require('express');
-const getData = require("./controller/data");
+const getData = require("./src/controller/data");
 const bodyParser =  require('body-parser');
 const cors = require("cors");
-const knex = require('./db/knex.js');
+const knex = require('./src/db/knex.js');
 const path = require('path');
 
 const app = express();
@@ -13,14 +13,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, 'build')));
-
 app.get('/hey', (req, res) => res.send('ho!'));
 
 app.get('/api/data', getData);
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.get('/data', async (req, res) => {
