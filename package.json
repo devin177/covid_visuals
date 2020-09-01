@@ -26,9 +26,10 @@
     "topojson-client": "^3.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3006 react-scripts start",
     "start:backend": "nodemon ./server.js",
     "build": "react-scripts build",
+    "all": "yarn build && yarn start:backend",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "migrate": "knex migrate:latest",

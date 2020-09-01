@@ -1,3 +1,7 @@
 .county:hover{
   fill:red;
 }
+.WorldMap{
+  display: flex;
+  flex-direction: row;
+}

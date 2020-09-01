@@ -1,6 +1,5 @@
 const dotenv = require('dotenv');
 const express = require('express');
-const getData = require("./src/controller/data");
 const bodyParser =  require('body-parser');
 const cors = require("cors");
 const knex = require('./src/db/knex.js');
@@ -12,9 +11,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-
-// Ping the db to get covid data
-app.get('/api/data', getData);
 
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, 'build')));
@@ -30,7 +26,7 @@ app.get('/data', async (req, res) => {
     .where(
       {
         county: `${req.query.county}`,
-        date: "2020-08-25"
+        date: `2020-08-28`
       }
     )
   res.json(result);
