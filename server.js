@@ -26,7 +26,7 @@ app.get('/data', async (req, res) => {
     .where(
       {
         county: `${req.query.county}`,
-        date: `2020-08-28`
+        date: `${req.query.date}`
       }
     )
   res.json(result);
