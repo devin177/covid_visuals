@@ -7,8 +7,6 @@ import axios from 'axios';
 import SimpleCard from './SimpleCard.js';
 
 const today = new Date();
-today.setDate(today.getDate() - 1);
-console.log(today.getDate());
 
 const projection = geoAlbers()
   .scale(3000)
@@ -58,7 +56,7 @@ const WorldMap = () => {
       .style("display", "inline")
 
     // Search db for the info about the county
-    axios.get(`${window.location.href}data/?county=${counties[index].properties.name}&date=${today.getFullYear()}-0${(today.getMonth()+1)}-${today.getDate()-1}`)
+    axios.get(`${window.location.href}data/?county=${counties[index].properties.name}&date=${today.getFullYear()}-0${(today.getMonth()+1)}-${today.getDate()}`)
       .then(res => {
         setCovidInfo(res.data[0]);
       })
