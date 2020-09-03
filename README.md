@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-This web-app is live! Checkout out [https://https://ca-covid-visuals.herokuapp.com/](this link) to view it online!
+This web-app is live! Checkout out [this link](https://https://ca-covid-visuals.herokuapp.com/) to view it online!
 ## Available Scripts
 
 In the project directory, you can run:
