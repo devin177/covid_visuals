@@ -56,7 +56,7 @@ const WorldMap = () => {
       .style("display", "inline")
 
     // Search db for the info about the county
-    axios.get(`${window.location.href}data/?county=${counties[index].properties.name}&date=${today.getFullYear()}-0${(today.getMonth()+1)}-${today.getDate()}`)
+    axios.get(`${window.location.href}data/?county=${counties[index].properties.name}&date=${today.getFullYear()}-0${(today.getMonth()+1)}-${today.getDate()-1}`)
       .then(res => {
         setCovidInfo(res.data[0]);
       })
