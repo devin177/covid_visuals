@@ -6,7 +6,18 @@ import * as d3 from "d3";
 import axios from 'axios';
 import SimpleCard from './SimpleCard.js';
 
+// Date management
 const today = new Date();
+const year = today.getFullYear();
+let month = today.getMonth()+1;
+let date = today.getDate()-1;
+
+if (month < 10) {
+  month = "0" + month;
+}
+if (date < 10) {
+  date = "0" + date;
+}
 
 const projection = geoAlbers()
   .scale(3000)
@@ -24,7 +35,7 @@ const tempInfo = {
   newcountdeaths: "0",
   totalcountconfirmed: "0",
   totalcountdeaths: "0",
-  date: `${today.getFullYear()}-0${today.getMonth()+1}-${today.getDate()-1}`
+  date: `${year}-0${month}-${date}`
 }
 
 const WorldMap = () => {
@@ -56,7 +67,7 @@ const WorldMap = () => {
       .style("display", "inline")
 
     // Search db for the info about the county
-    axios.get(`${window.location.href}data/?county=${counties[index].properties.name}&date=${today.getFullYear()}-0${(today.getMonth()+1)}-${today.getDate()-1}`)
+    axios.get(`${window.location.href}data/?county=${counties[index].properties.name}&date=${year}-${month}-${date}`)
       .then(res => {
         setCovidInfo(res.data[0]);
       })
