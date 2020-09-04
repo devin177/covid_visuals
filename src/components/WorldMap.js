@@ -19,6 +19,7 @@ if (date < 10) {
   date = "0" + date;
 }
 
+// Create and scale the projection
 const projection = geoAlbers()
   .scale(3000)
   .center([-17, 40])
@@ -29,15 +30,26 @@ var div = d3.select("body").append("div")
   .attr("class", "infoBox")
   .style("display", "none");
 
+// filler info for the cards
 const tempInfo = {
-  county: "Select a county!",
+  county: "Select a county",
   newcountconfirmed: "0",
   newcountdeaths: "0",
   totalcountconfirmed: "0",
   totalcountdeaths: "0",
-  date: `${year}-0${month}-${date}`
+  date: `${year}-${month}-${date}`
 }
 
+const stateInfo = {
+  county: "California",
+  newcountconfirmed: "0",
+  newcountdeaths: "0",
+  totalcountconfirmed: "0",
+  totalcountdeaths: "0",
+  date: `${year}-${month}-${date}`
+}
+
+// Exported function component
 const WorldMap = () => {
   // state array will hold our county GeoJSON objects
   const [counties, setCounties] = useState([]);
@@ -117,11 +129,11 @@ const WorldMap = () => {
         </g>
         {/*Instructions*/}
         <text className="instructions" x="5" y="20">
-          Click on a county for more information!
+          Click on a county for more information
         </text>
       </svg>
       <SimpleCard display="inline" data={covidInfo}/>
-      <SimpleCard display="inline" data={tempInfo}/>
+      <SimpleCard display="inline" data={stateInfo}/>
     </div>
   )
 }

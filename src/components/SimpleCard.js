@@ -42,14 +42,22 @@ export default function SimpleCard(props) {
         <Typography>
           {props.data.date}
         </Typography>
+        <br/>
+        <Typography variant="h6">
+          Today
+        </Typography>
         <Typography>
           + {props.data.newcountconfirmed} new cases
         </Typography>
         <Typography>
-          {Number(props.data.totalcountconfirmed)} total cases (current and recovered)
+          + {props.data.newcountdeaths} new deaths
+        </Typography>
+        <br/>
+        <Typography variant="h6">
+          Totals
         </Typography>
         <Typography>
-          + {props.data.newcountdeaths} deaths
+          {Number(props.data.totalcountconfirmed)} total cases (current and recovered)
         </Typography>
         <Typography>
           {Number(props.data.totalcountdeaths)} total deaths
