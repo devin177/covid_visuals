@@ -40,14 +40,14 @@ export default function SimpleCard(props) {
           {props.data.county}
         </Typography>
         <Typography>
-          {props.data.date}
+          Latest data from {props.data.date}
         </Typography>
         <br/>
         <Typography variant="h6">
-          Today
+          Today there were
         </Typography>
         <Typography>
-          + {props.data.newcountconfirmed} new cases
+          {props.data.newcountconfirmed} new cases
         </Typography>
         <Typography>
           + {props.data.newcountdeaths} new deaths
