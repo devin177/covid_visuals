@@ -32,6 +32,11 @@ app.get('/data', async (req, res) => {
   res.json(result);
 });
 
+app.get('/data/latest', async (req, res) => {
+  const result = await knex.raw(`SELECT * FROM "Cases" WHERE county = '${req.query.county}' ORDER BY id DESC LIMIT 1;`)
+  res.json(result);
+})
+
 const port = process.env.PORT
 app.listen(port, () => {
   console.log(`Listening on ${port}`);

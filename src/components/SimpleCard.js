@@ -8,8 +8,8 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
-    maxHeight: 650
+    maxWidth: 275,
+    maxHeight: 500
   },
   bullet: {
     display: 'inline-block',
@@ -63,12 +63,6 @@ export default function SimpleCard(props) {
           {Number(props.data.totalcountdeaths)} total deaths
         </Typography>
       </CardContent>
-      <CardActions className={classes.link}>
-        <Typography variant="subtitle1">
-          <p>Find out more on the state government's website</p>
-          <a href="https://covid19.ca.gov/">https://covid19.ca.gov/</a>
-        </Typography>
-      </CardActions>
     </Card>
   );
 }

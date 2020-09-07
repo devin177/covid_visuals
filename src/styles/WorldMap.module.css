@@ -4,4 +4,6 @@
 .WorldMap{
   display: flex;
   flex-direction: row;
+  min-width: 400;
+  min-height: 650;
 }

@@ -5,6 +5,8 @@ import styles from "../styles/WorldMap.module.css"
 import * as d3 from "d3";
 import axios from 'axios';
 import SimpleCard from './SimpleCard.js';
+import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
 
 // Date management
 const today = new Date();
@@ -28,6 +30,7 @@ const projection = geoAlbers()
 var div = d3.select("body").append("div")
   .attr("width", "50")
   .attr("class", "infoBox")
+  .style("font-size", "24")
   .style("display", "none");
 
 // filler info for the cards
@@ -79,9 +82,9 @@ const WorldMap = () => {
       .style("display", "inline")
 
     // Search db for the info about the county
-    axios.get(`${window.location.href}data/?county=${counties[index].properties.name}&date=${year}-${month}-${date}`)
+    axios.get(`${window.location.href}data/latest?county=${counties[index].properties.name}`)
       .then(res => {
-        setCovidInfo(res.data[0]);
+        setCovidInfo(res.data.rows[0]);
       })
 
     // Make info about county visible
@@ -92,8 +95,10 @@ const WorldMap = () => {
   // Updates label based on mouse
   const hoverHandler = (index) => {
     div
-      .style("display", "inline")
+      .style("display", "flex")
       .text(counties[index].properties.fullName);
+    d3.select(".counties")
+      .attr("title", counties[index].properties.name);
   }
 
   // Removes labels when not on any county/moved off one county
@@ -109,24 +114,24 @@ const WorldMap = () => {
   return (
     <div className={styles.WorldMap}>
       <svg width={ 400 } height={ 650 } viewBox="0 0 400 650">
-        <g className="counties">
-          {/*Fills in counties with white*/}
-          {/*Creates black outline*/}
-          {counties.map((section, index) => (
-              <path
-                key={ `path-${ index }` }
-                d={ geoPath().projection(projection)(section) }
-                className={styles.county}
-                fill={ `rgba(255,255,255)` }
-                stroke="#000000"
-                strokeWidth={ 0.5 }
-                onClick={ (e) => clickHandler(e, index) }
-                onMouseOver={ () => hoverHandler(index)}
-                onMouseOut={ () => mouseOutHandler() }
-              />
-            ))
-          }
-        </g>
+          <g className="counties">
+            {/*Fills in counties with white*/}
+            {/*Creates black outline*/}
+            {counties.map((section, index) => (
+                <path
+                  key={ `path-${ index }` }
+                  d={ geoPath().projection(projection)(section) }
+                  className={styles.county}
+                  fill={ `rgba(255,255,255)` }
+                  stroke="#000000"
+                  strokeWidth={ 0.5 }
+                  onClick={ (e) => clickHandler(e, index) }
+                  onMouseOver={ () => hoverHandler(index)}
+                  onMouseOut={ () => mouseOutHandler() }
+                />
+              ))
+            }
+          </g>
         {/*Instructions*/}
         <text className="instructions" x="5" y="20">
           Click on a county for more information
